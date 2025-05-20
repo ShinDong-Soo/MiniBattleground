@@ -8,10 +8,14 @@ public class Player : MonoBehaviour
     [field: SerializeField] public PlayerAnimationData AnimationData { get; private set; }
 
     [field: Header("References")]
+    [field: SerializeField] public PlayerSO Data { get; private set; }
+
     public Rigidbody Rigidbody { get; private set; }
     public Animator Animator { get; private set; }
     public PlayerInput Input { get; private set; }
     public CharacterController Controller { get; private set; }
+
+    private PlayerStateMachine stateMachine;
 
 
     void Awake()
@@ -22,6 +26,8 @@ public class Player : MonoBehaviour
         Animator = GetComponentInChildren<Animator>();
         Input = GetComponent<PlayerInput>();
         Controller = GetComponent<CharacterController>();
+
+        stateMachine = new PlayerStateMachine(this);
     }
 
 
