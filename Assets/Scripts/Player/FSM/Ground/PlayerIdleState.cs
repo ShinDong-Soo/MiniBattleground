@@ -2,17 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerIdleState : MonoBehaviour
+public class PlayerIdleState : PlayerGroundState
 {
-    // Start is called before the first frame update
-    void Start()
+    public PlayerIdleState(PlayerStateMachine stateMachine) : base(stateMachine)
+    { }
+
+
+    public override void Enter()
     {
-        
+        base.Enter();
+        stateMachine.MovementSpeedModifier = 0;
+        StartAnimation(stateMachine.Player.AnimationData.IdleParameterHash);
     }
 
-    // Update is called once per frame
-    void Update()
+
+    public override void Exit()
     {
-        
+        base.Exit();
+        StopAnimation(stateMachine.Player.AnimationData.IdleParameterHash);
+    }
+
+
+    public override void Update()
+    {
+        base.Update();
     }
 }

@@ -353,7 +353,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f71de29baaa0cc54486ffe66dcbacfe8,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 533145847}
   m_SourcePrefab: {fileID: 100100000, guid: f71de29baaa0cc54486ffe66dcbacfe8, type: 3}
 --- !u!4 &188544352 stripped
 Transform:
@@ -479,6 +483,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &533145846 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: f71de29baaa0cc54486ffe66dcbacfe8,
+    type: 3}
+  m_PrefabInstance: {fileID: 188544351}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &533145847
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 533145846}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: eedf7f6c40887084cb73c30ec0aedd76, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &663208414
 GameObject:
   m_ObjectHideFlags: 0
@@ -2529,6 +2560,8 @@ MonoBehaviour:
     airParameterName: Air
     jumpParameterName: Jump
     fallParameterName: Fall
+  <Data>k__BackingField: {fileID: 11400000, guid: 741f741e63e318e449e98efc9895871c,
+    type: 2}
 --- !u!4 &1296169920
 Transform:
   m_ObjectHideFlags: 0

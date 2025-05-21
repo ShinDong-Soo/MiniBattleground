@@ -13,6 +13,7 @@ public class PlayerStateMachine : StateMachine
     public float JumpForce { get; set;}
 
     public Transform MainCameraTransform { get; set; }
+    public PlayerIdleState IdleState { get; }
 
 
     public PlayerStateMachine(Player player)
@@ -22,5 +23,7 @@ public class PlayerStateMachine : StateMachine
 
         MovementSpeed = player.Data.GroundData.BaseSpeed;
         RotationDamping = player.Data.GroundData.BaseRotationDamping;
+
+        IdleState = new PlayerIdleState(this);
     }
 }
