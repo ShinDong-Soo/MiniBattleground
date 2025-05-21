@@ -34,6 +34,14 @@ public class PlayerGroundState : PlayerBaseState
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
+
+        // Fall Check
+        if (!stateMachine.Player.Controller.isGrounded
+            && stateMachine.Player.Controller.velocity.y < Physics.gravity.y * Time.fixedDeltaTime)
+        {
+            stateMachine.ChangeState(stateMachine.FallState);
+            return;
+        }
     }
 
 
@@ -44,6 +52,7 @@ public class PlayerGroundState : PlayerBaseState
             return;
 
         stateMachine.ChangeState(stateMachine.IdleState);
+        stateMachine.IsRunning = false;
 
         base.OnMovementCanceled(context);
     }
@@ -52,6 +61,24 @@ public class PlayerGroundState : PlayerBaseState
     // Idle - Walk
     protected virtual void OnMove()
     {
-        stateMachine.ChangeState(stateMachine.WalkState);
+        if (!stateMachine.IsRunning)
+            stateMachine.ChangeState(stateMachine.WalkState);
+        else
+            stateMachine.ChangeState(stateMachine.RunState);
+    }
+
+
+    // Ground - Jump - Run or Walk
+    protected override void OnJumpStarted(InputAction.CallbackContext context)
+    {
+        stateMachine.ChangeState(stateMachine.JumpState);
+    }
+
+
+    protected override void OnRunStarted(InputAction.CallbackContext context)
+    {
+        base.OnRunStarted(context);
+
+        stateMachine.IsRunning = true;
     }
 }
