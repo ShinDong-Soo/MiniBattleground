@@ -37,6 +37,7 @@ public class PlayerGroundState : PlayerBaseState
     }
 
 
+    // Walk - Idle
     protected override void OnMovementCanceled(InputAction.CallbackContext context)
     {
         if (stateMachine.MovementInput == Vector2.zero)
@@ -48,8 +49,9 @@ public class PlayerGroundState : PlayerBaseState
     }
 
 
+    // Idle - Walk
     protected virtual void OnMove()
     {
-        //stateMachine.ChangeState(stateMachine.WalkState);
+        stateMachine.ChangeState(stateMachine.WalkState);
     }
 }

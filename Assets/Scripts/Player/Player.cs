@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     public CharacterController Controller { get; private set; }
 
     private PlayerStateMachine stateMachine;
+    public ForceHandler ForceHandler { get; private set; }
 
 
 
@@ -27,6 +28,7 @@ public class Player : MonoBehaviour
         Animator = GetComponentInChildren<Animator>();
         Input = GetComponent<PlayerInput>();
         Controller = GetComponent<CharacterController>();
+        ForceHandler = GetComponent<ForceHandler>();
 
         stateMachine = new PlayerStateMachine(this);
     }

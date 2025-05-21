@@ -26,5 +26,12 @@ public class PlayerIdleState : PlayerGroundState
     public override void Update()
     {
         base.Update();
+
+         // Run or Walk Transition
+        if (stateMachine.MovementInput != Vector2.zero)
+        {
+            OnMove();
+            return;
+        }
     }
 }

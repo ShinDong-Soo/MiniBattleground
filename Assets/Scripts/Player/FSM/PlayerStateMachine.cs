@@ -14,6 +14,9 @@ public class PlayerStateMachine : StateMachine
 
     public Transform MainCameraTransform { get; set; }
     public PlayerIdleState IdleState { get; }
+    public PlayerWalkState WalkState { get; }
+    public PlayerRunState RunState { get; }
+
 
 
     public PlayerStateMachine(Player player)
@@ -25,5 +28,7 @@ public class PlayerStateMachine : StateMachine
         RotationDamping = player.Data.GroundData.BaseRotationDamping;
 
         IdleState = new PlayerIdleState(this);
+        WalkState = new PlayerWalkState(this);
+        RunState = new PlayerRunState(this);
     }
 }
