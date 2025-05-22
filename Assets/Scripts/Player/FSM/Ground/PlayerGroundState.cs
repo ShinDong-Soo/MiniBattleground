@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerGroundState : PlayerBaseState
 {
+
+
     public PlayerGroundState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
 
@@ -80,5 +82,18 @@ public class PlayerGroundState : PlayerBaseState
         base.OnRunStarted(context);
 
         stateMachine.IsRunning = true;
+    }
+
+
+    protected override void OnAimStarted(InputAction.CallbackContext context)
+    {
+        if (!stateMachine.HasGun)
+            return;
+
+        if (this is PlayerRunState)
+            return;
+
+        stateMachine.CameraSwitcher?.SwitchToShoulderAim();
+        stateMachine.ChangeState(stateMachine.AimState);
     }
 }

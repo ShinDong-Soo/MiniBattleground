@@ -16,6 +16,7 @@ public class PlayerAnimationData
     [SerializeField] string fallParameterName = "Fall";
 
     //[SerializeField] string attackParameterName = "Attack";
+    [SerializeField] string AimParameterName = "Aim";
     [SerializeField] string baseAttackParameterName = "BaseAttack";
 
     public int GroundParameterHash {  get; private set; }
@@ -27,7 +28,7 @@ public class PlayerAnimationData
     public int JumpParameterHash { get; private set; }
     public int FallParameterHash { get; private set; }
 
-    //public int AttackParameterHash { get; private set; }
+    public int AimParameterHash { get; private set; }
     public int BaseAttackParameterHash { get; private set; }
 
 
@@ -42,7 +43,7 @@ public class PlayerAnimationData
         JumpParameterHash = Animator.StringToHash(jumpParameterName);
         FallParameterHash = Animator.StringToHash(fallParameterName);
 
-        //AttackParameterHash = Animator.StringToHash(attackParameterName);
+        AimParameterHash = Animator.StringToHash(airParameterName);
         BaseAttackParameterHash = Animator.StringToHash(baseAttackParameterName);
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerAirState : PlayerBaseState
 {
@@ -20,5 +21,6 @@ public class PlayerAirState : PlayerBaseState
         base.Exit();
         StopAnimation(stateMachine.Player.AnimationData.AirParameterHash);
     }
+
 
 }

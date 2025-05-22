@@ -56,18 +56,30 @@ public class PlayerBaseState : IState
     protected virtual void AddInputActionsCallbacks()
     {
         PlayerInput input = stateMachine.Player.Input;
+
         input.PlayerActions.Movement.canceled += OnMovementCanceled;
         input.PlayerActions.Run.started += OnRunStarted;
         input.PlayerActions.Jump.started += OnJumpStarted;
+
+        input.PlayerActions.Aim.started += OnAimStarted;
+        input.PlayerActions.Aim.canceled += OnAimCanceled;
+
+        input.PlayerActions.Fire.started += OnFireStarted;
     }
 
 
     public virtual void RemoveInputActionsCallbacks()
     {
         PlayerInput input = stateMachine.Player.Input;
+
         input.PlayerActions.Movement.canceled -= OnMovementCanceled;
         input.PlayerActions.Run.started -= OnRunStarted;
         input.PlayerActions.Jump.started -= OnJumpStarted;
+
+        input.PlayerActions.Aim.started -= OnAimStarted;
+        input.PlayerActions.Aim.canceled -= OnAimCanceled;
+
+        input.PlayerActions.Fire.started -= OnFireStarted;
     }
 
 
@@ -84,6 +96,23 @@ public class PlayerBaseState : IState
 
 
     protected virtual void OnJumpStarted(InputAction.CallbackContext context)
+    {
+
+    }
+
+
+    protected virtual void OnAimStarted(InputAction.CallbackContext context)
+    {
+
+    }
+
+
+    protected virtual void OnAimCanceled(InputAction.CallbackContext context)
+    {
+
+    }
+
+    protected virtual void OnFireStarted(InputAction.CallbackContext context)
     {
 
     }

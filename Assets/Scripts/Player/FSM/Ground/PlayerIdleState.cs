@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 public class PlayerIdleState : PlayerGroundState
 {
+
     public PlayerIdleState(PlayerStateMachine stateMachine) : base(stateMachine)
     { }
 
@@ -34,4 +37,6 @@ public class PlayerIdleState : PlayerGroundState
             return;
         }
     }
+
+
 }

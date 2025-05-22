@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerStateMachine : StateMachine
 {
     public Player Player { get; }
+    public AimCameraSwitcher CameraSwitcher { get; }
 
     public Vector2 MovementInput { get; set; }
     public float MovementSpeed { get; private set; }
@@ -12,6 +13,8 @@ public class PlayerStateMachine : StateMachine
     public float MovementSpeedModifier { get; set; } = 1f;
     public float JumpForce { get; set; }
     public bool IsRunning { get; set; } = false;
+    public bool HasGun { get; set; }
+
 
     public Transform MainCameraTransform { get; set; }
     public PlayerIdleState IdleState { get; }
@@ -19,13 +22,15 @@ public class PlayerStateMachine : StateMachine
     public PlayerRunState RunState { get; }
     public PlayerJumpState JumpState { get; }
     public PlayerFallState FallState { get; }
-
+    public PlayerAimState AimState { get; }
 
 
     public PlayerStateMachine(Player player)
     {
         Player = player;
+        CameraSwitcher = GameObject.FindObjectOfType<AimCameraSwitcher>();
         MainCameraTransform = Camera.main.transform;
+
 
         MovementSpeed = player.Data.GroundData.BaseSpeed;
         RotationDamping = player.Data.GroundData.BaseRotationDamping;
@@ -35,5 +40,6 @@ public class PlayerStateMachine : StateMachine
         RunState = new PlayerRunState(this);
         JumpState = new PlayerJumpState(this);
         FallState = new PlayerFallState(this);
+        AimState = new PlayerAimState(this);
     }
 }
