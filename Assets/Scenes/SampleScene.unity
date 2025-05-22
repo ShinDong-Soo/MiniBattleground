@@ -2554,13 +2554,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <AnimationData>k__BackingField:
-    groundParameterName: Ground
+    groundParameterName: '@Ground'
     idleParameterName: Idle
     walkParameterName: Walk
     runParameterName: Run
-    airParameterName: Air
+    airParameterName: '@Air'
     jumpParameterName: Jump
     fallParameterName: Fall
+    baseAttackParameterName: BaseAttack
   <Data>k__BackingField: {fileID: 11400000, guid: 741f741e63e318e449e98efc9895871c,
     type: 2}
 --- !u!4 &1296169920
