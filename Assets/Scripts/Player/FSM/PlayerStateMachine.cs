@@ -13,7 +13,10 @@ public class PlayerStateMachine : StateMachine
     public float MovementSpeedModifier { get; set; } = 1f;
     public float JumpForce { get; set; }
     public bool IsRunning { get; set; } = false;
-    public bool HasGun { get; set; }
+
+    // Test
+    public bool HasGun { get; set; } = true;
+
 
 
     public Transform MainCameraTransform { get; set; }

@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerAimState : PlayerGroundState
 {
+    private bool isCurrentlyRunning;
+
     public PlayerAimState(PlayerStateMachine stateMachine) : base(stateMachine)
     { }
 
@@ -12,8 +14,10 @@ public class PlayerAimState : PlayerGroundState
     public override void Enter()
     {
         base.Enter();
-        stateMachine.MovementSpeedModifier = 0.3f;
-        StartAnimation(stateMachine.Player.AnimationData.AimParameterHash);
+        //stateMachine.MovementSpeedModifier = 0.3f;
+
+        isCurrentlyRunning = false;
+        StartAnimation(stateMachine.Player.AnimationData.IsAimingIdleParameterHash);
 
     }
 
@@ -21,7 +25,9 @@ public class PlayerAimState : PlayerGroundState
     public override void Exit()
     {
         base.Exit();
-        StopAnimation(stateMachine.Player.AnimationData.AimParameterHash);
+
+        StopAnimation(stateMachine.Player.AnimationData.IsAimingIdleParameterHash);
+        StopAnimation(stateMachine.Player.AnimationData.IsAimingRunParameterHash);
     }
 
 
@@ -29,10 +35,23 @@ public class PlayerAimState : PlayerGroundState
     {
         base.Update();
 
-        if (stateMachine.MovementInput == Vector2.zero)
-            stateMachine.Player.Animator.SetFloat("moveSpeed", 0);
-        else
-            stateMachine.Player.Animator.SetFloat("moveSpeed", 1);
+        bool isMoving = stateMachine.MovementInput != Vector2.zero;
+
+        if (isMoving && !isCurrentlyRunning)
+        {
+            // Idle - Run
+            StopAnimation(stateMachine.Player.AnimationData.IsAimingIdleParameterHash);
+            StartAnimation(stateMachine.Player.AnimationData.IsAimingRunParameterHash);
+            isCurrentlyRunning=true;
+        }
+        else if (!isMoving && isCurrentlyRunning)
+        {
+            // Run - Idle
+            StopAnimation(stateMachine.Player.AnimationData.IsAimingRunParameterHash);
+            StartAnimation(stateMachine.Player.AnimationData.IsAimingIdleParameterHash);
+            isCurrentlyRunning = false;
+        }
+
     }
 
 
