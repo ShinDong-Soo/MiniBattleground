@@ -122,7 +122,7 @@ public class PlayerBaseState : IState
     {
         Vector3 movementDirection = GetMovementDirection();
         Rotate(movementDirection);
-        Move(movementDirection);
+        MoveCharacter(movementDirection);
     }
 
 
@@ -141,22 +141,25 @@ public class PlayerBaseState : IState
     }
 
 
-    private void Rotate(Vector3 movementDirection)
+    protected virtual void Rotate(Vector3 movementDirection)
     {
-        if (movementDirection != Vector3.zero)
+
+        Transform playerTransform = stateMachine.Player.transform;
+        Vector3 cameraForward = stateMachine.MainCameraTransform.forward;
+        cameraForward.y = 0;
+        cameraForward.Normalize();
+
+        if (cameraForward != Vector3.zero)
         {
-            Transform playerTransform = stateMachine.Player.transform;
-            Quaternion targetRotation = Quaternion.LookRotation(movementDirection);
+            Quaternion targetRotation = Quaternion.LookRotation(cameraForward);
             playerTransform.rotation = Quaternion.Slerp(playerTransform.rotation, targetRotation, stateMachine.RotationDamping * Time.deltaTime);
         }
     }
 
 
-    private void Move(Vector3 movementDirection)
+    private void MoveCharacter(Vector3 movementDirection)
     {
         float movementSpeed = GetMovementSpeed();
-
-        Debug.Log($"Dir {movementDirection} Speed {movementSpeed}");
 
         stateMachine.Player.Controller.Move(((movementDirection * movementSpeed)
             + stateMachine.Player.ForceHandler.Movement) * Time.deltaTime);

@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerAimState : PlayerGroundState
 {
-    private bool isCurrentlyRunning;
+    private bool isRunning;
 
     public PlayerAimState(PlayerStateMachine stateMachine) : base(stateMachine)
     { }
@@ -16,7 +17,7 @@ public class PlayerAimState : PlayerGroundState
         base.Enter();
         //stateMachine.MovementSpeedModifier = 0.3f;
 
-        isCurrentlyRunning = false;
+        isRunning = false;
         StartAnimation(stateMachine.Player.AnimationData.IsAimingIdleParameterHash);
 
     }
@@ -37,21 +38,36 @@ public class PlayerAimState : PlayerGroundState
 
         bool isMoving = stateMachine.MovementInput != Vector2.zero;
 
-        if (isMoving && !isCurrentlyRunning)
+        if (isMoving && !isRunning)
         {
             // Idle - Run
             StopAnimation(stateMachine.Player.AnimationData.IsAimingIdleParameterHash);
             StartAnimation(stateMachine.Player.AnimationData.IsAimingRunParameterHash);
-            isCurrentlyRunning=true;
+            isRunning =true;
         }
-        else if (!isMoving && isCurrentlyRunning)
+        else if (!isMoving && isRunning)
         {
             // Run - Idle
             StopAnimation(stateMachine.Player.AnimationData.IsAimingRunParameterHash);
             StartAnimation(stateMachine.Player.AnimationData.IsAimingIdleParameterHash);
-            isCurrentlyRunning = false;
+            isRunning = false;
         }
 
+    }
+
+
+    protected override void Rotate(Vector3 movementDirection)
+    {
+        Transform playerTransform = stateMachine.Player.transform;
+        Vector3 cameraForward = stateMachine.MainCameraTransform.forward;
+        cameraForward.y = 0;
+        cameraForward.Normalize();
+
+        if (cameraForward != Vector3.zero)
+        {
+            quaternion targetRotation = Quaternion.LookRotation(cameraForward);
+            playerTransform.rotation = Quaternion.Slerp(playerTransform.rotation, targetRotation, stateMachine.RotationDamping * Time.deltaTime);
+        }
     }
 
 
