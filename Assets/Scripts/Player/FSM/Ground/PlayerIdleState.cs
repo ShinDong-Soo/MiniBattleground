@@ -16,6 +16,12 @@ public class PlayerIdleState : PlayerGroundState
         base.Enter();
         stateMachine.MovementSpeedModifier = 0;
         StartAnimation(stateMachine.Player.AnimationData.IdleParameterHash);
+
+        if (stateMachine.HasGun && !(stateMachine.CurrentState is PlayerAimState))
+        {
+            stateMachine.PreviousState = this;
+            stateMachine.ChangeState(stateMachine.AimState);
+        }
     }
 
 
@@ -36,6 +42,12 @@ public class PlayerIdleState : PlayerGroundState
             OnMove();
             return;
         }
+    }
+
+
+    protected override void OnAimStarted(InputAction.CallbackContext context)
+    {
+        base.OnAimStarted(context);
     }
 
 

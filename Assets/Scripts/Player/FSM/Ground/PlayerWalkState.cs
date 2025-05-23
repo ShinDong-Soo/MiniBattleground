@@ -16,6 +16,12 @@ public class PlayerWalkState : PlayerGroundState
         base.Enter();
 
         StartAnimation(stateMachine.Player.AnimationData.WalkParameterHash);
+
+        if (stateMachine.HasGun && !(stateMachine.CurrentState is PlayerAimState))
+        {
+            stateMachine.PreviousState = this;
+            stateMachine.ChangeState(stateMachine.AimState);
+        }
     }
 
 
@@ -30,5 +36,11 @@ public class PlayerWalkState : PlayerGroundState
     {
         base.OnRunStarted(context);
         stateMachine.ChangeState(stateMachine.RunState);
+    }
+
+
+    protected override void OnAimStarted(InputAction.CallbackContext context)
+    {
+        base.OnAimStarted(context);
     }
 }

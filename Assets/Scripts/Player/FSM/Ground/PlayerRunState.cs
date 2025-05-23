@@ -13,6 +13,12 @@ public class PlayerRunState : PlayerGroundState
         stateMachine.MovementSpeedModifier =groundData.RunSpeedModifier;
         base.Enter();
         StartAnimation(stateMachine.Player.AnimationData.RunParameterHash);
+
+        if (stateMachine.HasGun && !(stateMachine.CurrentState is PlayerAimState))
+        {
+            stateMachine.PreviousState = this;
+            stateMachine.ChangeState(stateMachine.AimState);
+        }
     }
 
 

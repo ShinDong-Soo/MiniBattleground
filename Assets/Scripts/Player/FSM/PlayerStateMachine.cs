@@ -17,15 +17,21 @@ public class PlayerStateMachine : StateMachine
     // Test
     public bool HasGun { get; set; } = true;
 
-
-
     public Transform MainCameraTransform { get; set; }
+
+
+
     public PlayerIdleState IdleState { get; }
     public PlayerWalkState WalkState { get; }
     public PlayerRunState RunState { get; }
     public PlayerJumpState JumpState { get; }
     public PlayerFallState FallState { get; }
     public PlayerAimState AimState { get; }
+
+
+    public PlayerBaseState CurrentState { get; private set; }
+    public PlayerBaseState PreviousState { get; set; }
+
 
 
     public PlayerStateMachine(Player player)
@@ -44,5 +50,19 @@ public class PlayerStateMachine : StateMachine
         JumpState = new PlayerJumpState(this);
         FallState = new PlayerFallState(this);
         AimState = new PlayerAimState(this);
+    }
+
+
+    public override void ChangeState(IState newstate)
+    {
+        if (currentState == newstate) return;
+
+        currentState?.Exit ();
+
+        PreviousState = CurrentState;
+        CurrentState = newstate as PlayerBaseState;
+
+        currentState = newstate;
+        currentState?.Enter ();
     }
 }

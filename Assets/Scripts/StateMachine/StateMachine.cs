@@ -7,8 +7,10 @@ public abstract class StateMachine
     protected IState currentState;
 
 
-    public void ChangeState(IState newstate)
+    public virtual void ChangeState(IState newstate)
     {
+        if (currentState == newstate) return;
+
         currentState?.Exit();
         currentState = newstate;
         currentState?.Enter();

@@ -15,9 +15,10 @@ public class PlayerAimState : PlayerGroundState
     public override void Enter()
     {
         base.Enter();
-        //stateMachine.MovementSpeedModifier = 0.3f;
 
+        stateMachine.MovementSpeedModifier = 0.3f;
         isRunning = false;
+
         StartAnimation(stateMachine.Player.AnimationData.IsAimingIdleParameterHash);
 
     }
@@ -40,19 +41,31 @@ public class PlayerAimState : PlayerGroundState
 
         if (isMoving && !isRunning)
         {
-            // Idle - Run
-            StopAnimation(stateMachine.Player.AnimationData.IsAimingIdleParameterHash);
-            StartAnimation(stateMachine.Player.AnimationData.IsAimingRunParameterHash);
-            isRunning =true;
+            TransitionToRun();
         }
         else if (!isMoving && isRunning)
         {
-            // Run - Idle
-            StopAnimation(stateMachine.Player.AnimationData.IsAimingRunParameterHash);
-            StartAnimation(stateMachine.Player.AnimationData.IsAimingIdleParameterHash);
-            isRunning = false;
+            TransitionToIdle();
         }
 
+    }
+
+
+    // Idle - Run
+    private void TransitionToRun()
+    {
+        StopAnimation(stateMachine.Player.AnimationData.IsAimingIdleParameterHash);
+        StartAnimation(stateMachine.Player.AnimationData.IsAimingRunParameterHash);
+        isRunning = true;
+    }
+
+
+    // Run - Idle
+    private void TransitionToIdle()
+    {
+        StopAnimation(stateMachine.Player.AnimationData.IsAimingRunParameterHash);
+        StartAnimation(stateMachine.Player.AnimationData.IsAimingIdleParameterHash);
+        isRunning = false;
     }
 
 
@@ -74,6 +87,12 @@ public class PlayerAimState : PlayerGroundState
     protected override void OnFireStarted(InputAction.CallbackContext context)
     {
 
+    }
+
+
+    protected override void OnAimStarted(InputAction.CallbackContext context)
+    {
+        stateMachine.CameraSwitcher?.SwitchToShoulderAim();
     }
 
 
