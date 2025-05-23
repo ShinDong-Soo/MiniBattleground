@@ -19,7 +19,7 @@ public class PlayerAimState : PlayerGroundState
         stateMachine.MovementSpeedModifier = 0.3f;
         isRunning = false;
 
-        StartAnimation(stateMachine.Player.AnimationData.IsAimingIdleParameterHash);
+        SetExclusiveAnimation(stateMachine.Player.AnimationData.IsAimingIdleParameterHash);
 
     }
 
@@ -39,34 +39,25 @@ public class PlayerAimState : PlayerGroundState
 
         bool isMoving = stateMachine.MovementInput != Vector2.zero;
 
-        if (isMoving && !isRunning)
-        {
-            TransitionToRun();
-        }
-        else if (!isMoving && isRunning)
-        {
-            TransitionToIdle();
-        }
+        SwitchToAnimation(isMoving);
 
     }
 
 
-    // Idle - Run
-    private void TransitionToRun()
+    private void SwitchToAnimation(bool run)
     {
-        StopAnimation(stateMachine.Player.AnimationData.IsAimingIdleParameterHash);
-        StartAnimation(stateMachine.Player.AnimationData.IsAimingRunParameterHash);
-        isRunning = true;
+        if (run && !isRunning)
+        {
+            SetExclusiveAnimation(stateMachine.Player.AnimationData.IsAimingRunParameterHash);
+            isRunning = true;
+        }
+        else if (!run && isRunning)
+        {
+            SetExclusiveAnimation(stateMachine.Player.AnimationData.IsAimingIdleParameterHash);
+            isRunning = false;
+        }
     }
 
-
-    // Run - Idle
-    private void TransitionToIdle()
-    {
-        StopAnimation(stateMachine.Player.AnimationData.IsAimingRunParameterHash);
-        StartAnimation(stateMachine.Player.AnimationData.IsAimingIdleParameterHash);
-        isRunning = false;
-    }
 
 
     protected override void Rotate(Vector3 movementDirection)
@@ -100,5 +91,17 @@ public class PlayerAimState : PlayerGroundState
     {
         stateMachine.CameraSwitcher?.SwitchToHipFire();
         stateMachine.ChangeState(stateMachine.IdleState);
+    }
+
+
+    private void SetExclusiveAnimation(int activeHash)
+    {
+        var anim = stateMachine.Player.Animator;
+
+        anim.SetBool(stateMachine.Player.AnimationData.IdleParameterHash, false);
+        anim.SetBool(stateMachine.Player.AnimationData.IsAimingIdleParameterHash, false);
+        anim.SetBool(stateMachine.Player.AnimationData.IsAimingRunParameterHash, false);
+
+        anim.SetBool(activeHash, true);
     }
 }
