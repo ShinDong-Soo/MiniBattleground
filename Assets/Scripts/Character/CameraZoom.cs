@@ -1,49 +1,67 @@
 using Cinemachine;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraZoom : MonoBehaviour
 {
-    [SerializeField][Range(0, 10f)] private float defaultDistance = 6f;
-    [SerializeField][Range(0, 10f)] private float minimumDistance = 1f;
-    [SerializeField][Range(0, 10f)] private float maximumDistance = 6f;
+    [System.Serializable]
+    public class ZoomData
+    {
+        public CinemachineVirtualCamera VirtualCamera;
+        [Range(0, 10f)] public float defaultDistance = 6f;
+        [Range(0, 10f)] public float minDistance = 2f;
+        [Range(0, 10f)] public float maxDistance = 6f;
+        public float currentDistance;
+        [HideInInspector] public CinemachineFramingTransposer transposer;
+    }
 
+    [SerializeField] private ZoomData[] zoomCameras;
     [SerializeField][Range(0, 10f)] private float smoothing = 4f;
     [SerializeField][Range(0, 10f)] private float zoomSensitivity = 1f;
-
-    CinemachineFramingTransposer framingTransposer;
     CinemachineInputProvider inputProvider;
-
-    float currentTargetDistance;
 
 
 
     void Awake()
     {
-        framingTransposer = GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineFramingTransposer>();
         inputProvider = GetComponent<CinemachineInputProvider>();
 
-        currentTargetDistance = defaultDistance;
+        foreach (var zoom in zoomCameras)
+        {
+            zoom.transposer = zoom.VirtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
+            zoom.currentDistance = zoom.defaultDistance;
+            zoom.transposer.m_CameraDistance = zoom.defaultDistance;
+        }
     }
 
 
     void Update()
     {
-        Zoom();
+        float zoomInput = ReadZoomInput();
+        UpdateActiveCameraZoom(zoomInput);
     }
 
 
-    void Zoom()
+    private float ReadZoomInput()
     {
-        float zoomValue = inputProvider.GetAxisValue(2) * zoomSensitivity;
+        return inputProvider.GetAxisValue(2) * zoomSensitivity;
+    }
 
-        currentTargetDistance = Mathf.Clamp(currentTargetDistance + zoomValue, minimumDistance, maximumDistance);
-        float currentDistance = framingTransposer.m_CameraDistance;
-        if (currentDistance == currentTargetDistance)
-            return;
 
-        float lerpedZoomValue = Mathf.Lerp(currentDistance, currentTargetDistance, smoothing * Time.deltaTime);
-        framingTransposer.m_CameraDistance = lerpedZoomValue;
+    private void UpdateActiveCameraZoom(float zoomInput)
+    {
+        foreach (var zoom in zoomCameras)
+        {
+            if (!zoom.VirtualCamera.isActiveAndEnabled)
+                continue;
+
+            zoom.currentDistance = Mathf.Clamp(zoom.currentDistance + zoomInput, zoom.minDistance, zoom.maxDistance);
+            float currentDistance = zoom.transposer.m_CameraDistance;
+
+            if (Mathf.Approximately(currentDistance, zoom.currentDistance))
+            {
+                float lerpedDistance = Mathf.Lerp(currentDistance, zoom.currentDistance, smoothing * Time.deltaTime);
+                zoom.transposer.m_CameraDistance = lerpedDistance;
+            }
+        }
     }
 }

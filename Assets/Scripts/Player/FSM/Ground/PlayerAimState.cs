@@ -20,6 +20,7 @@ public class PlayerAimState : PlayerGroundState
         isRunning = false;
 
         SetExclusiveAnimation(stateMachine.Player.AnimationData.IsAimingIdleParameterHash);
+        stateMachine.CameraSwitcher?.SwitchToShoulderAim();
 
     }
 
@@ -30,33 +31,33 @@ public class PlayerAimState : PlayerGroundState
 
         StopAnimation(stateMachine.Player.AnimationData.IsAimingIdleParameterHash);
         StopAnimation(stateMachine.Player.AnimationData.IsAimingRunParameterHash);
+        stateMachine.CameraSwitcher?.SwitchToHipFire();
     }
 
 
     public override void Update()
     {
         base.Update();
-
-        bool isMoving = stateMachine.MovementInput != Vector2.zero;
-
-        SwitchToAnimation(isMoving);
-
+        HandleMovementAnimation();
     }
 
 
-    private void SwitchToAnimation(bool run)
+    private void HandleMovementAnimation()
     {
-        if (run && !isRunning)
+        bool isCurrentlyMoving = stateMachine.MovementInput != Vector2.zero;
+
+        if (isCurrentlyMoving && !isRunning)
         {
             SetExclusiveAnimation(stateMachine.Player.AnimationData.IsAimingRunParameterHash);
             isRunning = true;
         }
-        else if (!run && isRunning)
+        else if (!isCurrentlyMoving && isRunning)
         {
             SetExclusiveAnimation(stateMachine.Player.AnimationData.IsAimingIdleParameterHash);
             isRunning = false;
         }
     }
+
 
 
 
@@ -75,10 +76,7 @@ public class PlayerAimState : PlayerGroundState
     }
 
 
-    protected override void OnFireStarted(InputAction.CallbackContext context)
-    {
-
-    }
+    protected override void OnFireStarted(InputAction.CallbackContext context) { }
 
 
     protected override void OnAimStarted(InputAction.CallbackContext context)
