@@ -14,20 +14,39 @@ public class CameraZoom : MonoBehaviour
         [HideInInspector] public CinemachineFramingTransposer transposer;
     }
 
+    [Header("Zoom Settings")]
     [SerializeField] private ZoomData[] zoomCameras;
     [SerializeField][Range(0, 10f)] private float smoothing = 4f;
     [SerializeField][Range(0, 10f)] private float zoomSensitivity = 1f;
-    CinemachineInputProvider inputProvider;
+
+    [Header("Input")]
+    [SerializeField] private CinemachineInputProvider inputProvider;
 
 
 
     void Awake()
     {
-        inputProvider = GetComponent<CinemachineInputProvider>();
+        if (inputProvider == null)
+        {
+            Debug.LogError("CinemachineInputProvider가 할당되지 않았습니다.");
+        }
 
         foreach (var zoom in zoomCameras)
         {
+            if (zoom.VirtualCamera == null)
+            {
+                Debug.LogError("VirtualCamera가 할당되지 않았습니다.");
+                continue;
+            }
+
             zoom.transposer = zoom.VirtualCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
+
+            if (zoom.transposer == null)
+            {
+                Debug.LogError("FramingTransposer가 없습니다.");
+                continue;
+            }
+
             zoom.currentDistance = zoom.defaultDistance;
             zoom.transposer.m_CameraDistance = zoom.defaultDistance;
         }
@@ -36,6 +55,8 @@ public class CameraZoom : MonoBehaviour
 
     void Update()
     {
+        if (inputProvider == null) return;
+
         float zoomInput = ReadZoomInput();
         UpdateActiveCameraZoom(zoomInput);
     }
@@ -57,7 +78,7 @@ public class CameraZoom : MonoBehaviour
             zoom.currentDistance = Mathf.Clamp(zoom.currentDistance + zoomInput, zoom.minDistance, zoom.maxDistance);
             float currentDistance = zoom.transposer.m_CameraDistance;
 
-            if (Mathf.Approximately(currentDistance, zoom.currentDistance))
+            if (!Mathf.Approximately(currentDistance, zoom.currentDistance))
             {
                 float lerpedDistance = Mathf.Lerp(currentDistance, zoom.currentDistance, smoothing * Time.deltaTime);
                 zoom.transposer.m_CameraDistance = lerpedDistance;
