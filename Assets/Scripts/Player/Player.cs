@@ -19,8 +19,6 @@ public class Player : MonoBehaviour
     private PlayerStateMachine stateMachine;
     public ForceHandler ForceHandler { get; private set; }
     
-    public CrosshairController Crosshair { get; private set; }
-
 
 
     void Awake()
@@ -32,7 +30,6 @@ public class Player : MonoBehaviour
         Input = GetComponent<PlayerInput>();
         Controller = GetComponent<CharacterController>();
         ForceHandler = GetComponent<ForceHandler>();
-        Crosshair = GetComponentInChildren<CrosshairController>();
 
         stateMachine = new PlayerStateMachine(this);
     }

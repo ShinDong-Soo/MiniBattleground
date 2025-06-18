@@ -18,6 +18,6 @@ public class WeaponController : MonoBehaviour
     public void EquipWeapon(WeaponType weaponType)
     {
         CurrentWeaponType = weaponType;
-        CrosshairController.Instance?.SetCrosshairVisible(weaponType == WeaponType.Gun);
+        UIManager.Instance?.SetCrosshairVisible(weaponType == WeaponType.Gun);
     }
 }
