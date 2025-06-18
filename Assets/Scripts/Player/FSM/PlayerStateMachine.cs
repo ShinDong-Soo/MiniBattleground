@@ -15,7 +15,7 @@ public class PlayerStateMachine : StateMachine
     public bool IsRunning { get; set; } = false;
 
     // Test
-    public bool HasGun { get; set; } = true;
+    public bool HasGun { get; set; } = false;
 
     public Transform MainCameraTransform { get; set; }
 
