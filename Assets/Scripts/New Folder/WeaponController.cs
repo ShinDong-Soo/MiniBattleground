@@ -22,12 +22,13 @@ public class WeaponController : MonoBehaviour
         if (currentWeaponObject != null)
             Destroy(currentWeaponObject);
 
-        currentWeaponObject = Instantiate(data.weaponPrefab, weaponHolder);
-
+        currentWeaponObject = Instantiate(data.weaponPrefab);
+        currentWeaponObject.transform.SetParent(weaponHolder, false);
         currentWeaponObject.transform.localPosition = data.equipPositionOffset;
         currentWeaponObject.transform.localRotation = Quaternion.Euler(data.equipRotaionOffset);
         
         CurrentWeaponType = data.weaponType;
+
         UIManager.Instance?.SetCrosshairVisible(data.weaponType == WeaponType.Gun);
     }
 }

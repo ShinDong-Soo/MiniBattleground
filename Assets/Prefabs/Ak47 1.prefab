@@ -215,8 +215,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 45793245956643888}
-  - component: {fileID: 5837694090294811769}
   - component: {fileID: 7699312730973523797}
+  - component: {fileID: 3976852664566700399}
   m_Layer: 0
   m_Name: Ak47 1
   m_TagString: Untagged
@@ -240,7 +240,20 @@ Transform:
   - {fileID: 1176718227354010822}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &5837694090294811769
+--- !u!114 &7699312730973523797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6767873823367436198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03de322dea4ed8f47b49527493279505, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponData: {fileID: 11400000, guid: ef2b4527e098aa546ac30de3d77d66f3, type: 2}
+--- !u!65 &3976852664566700399
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -261,19 +274,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.4, y: 0.9, z: -0.13}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7699312730973523797
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6767873823367436198}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03de322dea4ed8f47b49527493279505, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponData: {fileID: 11400000, guid: ef2b4527e098aa546ac30de3d77d66f3, type: 2}
 --- !u!1 &8375574021117885767
 GameObject:
   m_ObjectHideFlags: 0
