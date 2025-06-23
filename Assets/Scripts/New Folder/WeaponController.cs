@@ -16,6 +16,18 @@ public class WeaponController : MonoBehaviour
     private WeaponType currentWeaponType = WeaponType.None;
 
     public WeaponType CurrentWeaponType => currentWeaponType;
+    private WeaponFire currentWeaponFire;
+
+
+
+    private void Update()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            currentWeaponFire?.Fire();
+        }
+    }
+
 
 
     public void EquipWeapon(WeaponData data)
@@ -28,8 +40,9 @@ public class WeaponController : MonoBehaviour
         currentWeaponObject.transform.localPosition = data.equipPositionOffset;
         currentWeaponObject.transform.localRotation = Quaternion.Euler(data.equipRotaionOffset);
 
+        currentWeaponFire = currentWeaponObject.GetComponent<WeaponFire>();
+
         currentWeaponType = data.weaponType;
-        
         UIManager.Instance?.SetCrosshairVisible(data.weaponType == WeaponType.Gun);
     }
 }

@@ -61,9 +61,6 @@ public class PlayerBaseState : IState
         input.PlayerActions.Run.started += OnRunStarted;
         input.PlayerActions.Jump.started += OnJumpStarted;
 
-        //input.PlayerActions.Aim.started += OnAimStarted;
-        //input.PlayerActions.Aim.canceled += OnAimCanceled;
-
         input.PlayerActions.Fire.started += OnFireStarted;
     }
 
@@ -75,9 +72,6 @@ public class PlayerBaseState : IState
         input.PlayerActions.Movement.canceled -= OnMovementCanceled;
         input.PlayerActions.Run.started -= OnRunStarted;
         input.PlayerActions.Jump.started -= OnJumpStarted;
-
-        //input.PlayerActions.Aim.started -= OnAimStarted;
-        //input.PlayerActions.Aim.canceled -= OnAimCanceled;
 
         input.PlayerActions.Fire.started -= OnFireStarted;
     }
@@ -106,11 +100,6 @@ public class PlayerBaseState : IState
 
     }
 
-
-    protected virtual void OnAimCanceled(InputAction.CallbackContext context)
-    {
-
-    }
 
     protected virtual void OnFireStarted(InputAction.CallbackContext context)
     {

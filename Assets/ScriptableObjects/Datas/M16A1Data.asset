@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 469bd76ab6eb5d24084ea47e05d41d1d, type: 3}
-  m_Name: AK47Data
+  m_Name: M16A1Data
   m_EditorClassIdentifier: 
-  weaponName: AK47Data
+  weaponName: M16A1Data
   weaponType: 1
   damage: 30
   range: 100
-  weaponPrefab: {fileID: 6767873823367436198, guid: 7d199467432fc5f4784d98fe41d00903,
+  weaponPrefab: {fileID: 3852799265655734254, guid: ad992249c2e11f048a1e6f57d4b807a0,
     type: 3}
-  equipPositionOffset: {x: -0.04, y: 1.48, z: 0.53}
+  equipPositionOffset: {x: 0, y: 0, z: 0}
   equipRotaionOffset: {x: 180, y: -110, z: 95}
