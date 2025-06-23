@@ -83,17 +83,4 @@ public class PlayerGroundState : PlayerBaseState
 
         stateMachine.IsRunning = true;
     }
-
-
-    protected override void OnAimStarted(InputAction.CallbackContext context)
-    {
-        if (!stateMachine.HasGun)
-            return;
-
-        if (this is PlayerRunState)
-            return;
-
-        stateMachine.CameraSwitcher?.SwitchToShoulderAim();
-        stateMachine.ChangeState(stateMachine.AimState);
-    }
 }

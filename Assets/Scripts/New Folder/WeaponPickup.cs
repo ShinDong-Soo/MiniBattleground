@@ -9,7 +9,7 @@ public class WeaponPickup : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            var weaponController = other.GetComponent<WeaponController>();
+            WeaponController weaponController = other.GetComponentInChildren<WeaponController>();
             if (weaponController != null)
             {
                 weaponController.EquipWeapon(weaponData);

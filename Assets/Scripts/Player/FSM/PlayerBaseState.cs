@@ -61,8 +61,8 @@ public class PlayerBaseState : IState
         input.PlayerActions.Run.started += OnRunStarted;
         input.PlayerActions.Jump.started += OnJumpStarted;
 
-        input.PlayerActions.Aim.started += OnAimStarted;
-        input.PlayerActions.Aim.canceled += OnAimCanceled;
+        //input.PlayerActions.Aim.started += OnAimStarted;
+        //input.PlayerActions.Aim.canceled += OnAimCanceled;
 
         input.PlayerActions.Fire.started += OnFireStarted;
     }
@@ -76,8 +76,8 @@ public class PlayerBaseState : IState
         input.PlayerActions.Run.started -= OnRunStarted;
         input.PlayerActions.Jump.started -= OnJumpStarted;
 
-        input.PlayerActions.Aim.started -= OnAimStarted;
-        input.PlayerActions.Aim.canceled -= OnAimCanceled;
+        //input.PlayerActions.Aim.started -= OnAimStarted;
+        //input.PlayerActions.Aim.canceled -= OnAimCanceled;
 
         input.PlayerActions.Fire.started -= OnFireStarted;
     }
@@ -185,18 +185,16 @@ public class PlayerBaseState : IState
 
     protected void StartAnimation(int animationHash)
     {
-        if (!stateMachine.Player.Animator.GetBool(animationHash))
-        {
-            stateMachine.Player.Animator.SetBool(animationHash, true);
-        }
+
+        stateMachine.Player.Animator.SetBool(animationHash, true);
+
     }
 
 
     protected void StopAnimation(int animationHash)
     {
-        if (!stateMachine.Player.Animator.GetBool(animationHash))
-        {
-            stateMachine.Player.Animator.SetBool(animationHash, false);
-        }
+
+        stateMachine.Player.Animator.SetBool(animationHash, false);
+
     }
 }

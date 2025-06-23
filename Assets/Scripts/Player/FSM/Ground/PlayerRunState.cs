@@ -14,11 +14,11 @@ public class PlayerRunState : PlayerGroundState
         base.Enter();
         StartAnimation(stateMachine.Player.AnimationData.RunParameterHash);
 
-        if (stateMachine.HasGun && !(stateMachine.CurrentState is PlayerAimState))
-        {
-            stateMachine.PreviousState = this;
-            stateMachine.ChangeState(stateMachine.AimState);
-        }
+        //if (stateMachine.HasGun && !(stateMachine.CurrentState is PlayerAimState))
+        //{
+        //    stateMachine.PreviousState = this;
+        //    stateMachine.ChangeState(stateMachine.AimState);
+        //}
     }
 
 

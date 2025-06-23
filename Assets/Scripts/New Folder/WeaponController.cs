@@ -11,10 +11,11 @@ public enum WeaponType
 
 public class WeaponController : MonoBehaviour
 {
-    public WeaponType CurrentWeaponType { get; private set; } = WeaponType.None;
     [SerializeField] private Transform weaponHolder;
     private GameObject currentWeaponObject;
+    private WeaponType currentWeaponType = WeaponType.None;
 
+    public WeaponType CurrentWeaponType => currentWeaponType;
 
 
     public void EquipWeapon(WeaponData data)
@@ -26,9 +27,9 @@ public class WeaponController : MonoBehaviour
         currentWeaponObject.transform.SetParent(weaponHolder, false);
         currentWeaponObject.transform.localPosition = data.equipPositionOffset;
         currentWeaponObject.transform.localRotation = Quaternion.Euler(data.equipRotaionOffset);
-        
-        CurrentWeaponType = data.weaponType;
 
+        currentWeaponType = data.weaponType;
+        
         UIManager.Instance?.SetCrosshairVisible(data.weaponType == WeaponType.Gun);
     }
 }

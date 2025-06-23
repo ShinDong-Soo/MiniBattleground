@@ -11,12 +11,13 @@ public class UIManager : MonoBehaviour
     [Header("Health Bar")]
     [SerializeField] private Slider healthBar;
 
-    [Header("Ammo UI")]
-    [SerializeField] private Text ammoText;
+    //[Header("Ammo UI")]
+    //[SerializeField] private Text ammoText;
 
     private CrosshairController crosshair;
     private HealthBarController health;
-    private AmmoUIController ammo;
+    //private AmmoUIController ammo;
+
 
 
 
@@ -32,14 +33,14 @@ public class UIManager : MonoBehaviour
 
         crosshair = new CrosshairController(crosshairUI);
         health = new HealthBarController(healthBar);
-        ammo = new AmmoUIController(ammoText);
+        //ammo = new AmmoUIController(ammoText);
     }
 
 
 
     public void SetCrosshairVisible(bool isVisivle) => crosshair.SetVisible(isVisivle);
     public void SetHealth(float normalizedValue) => health.SetHealth(normalizedValue);
-    public void SetAmmoText(string text) => ammo.SetAmmo(text);
+    //public void SetAmmoText(string text) => ammo.SetAmmo(text);
 
 
 
@@ -61,10 +62,10 @@ public class UIManager : MonoBehaviour
     }
 
 
-    private class AmmoUIController
-    {
-        private Text ammo;
-        public AmmoUIController(Text txt) => ammo = txt;
-        public void SetAmmo(string value) => ammo.text = value;
-    }
+    //private class AmmoUIController
+    //{
+    //    private Text ammo;
+    //    public AmmoUIController(Text txt) => ammo = txt;
+    //    public void SetAmmo(string value) => ammo.text = value;
+    //}
 }

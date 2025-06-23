@@ -9,7 +9,6 @@ public class Player : MonoBehaviour
 
     [field: Header("References")]
     [field: SerializeField] public PlayerSO Data { get; private set; }
-    [field: SerializeField] public AimCameraSwitcher CameraSwitcher { get; private set; }
 
     public Rigidbody Rigidbody { get; private set; }
     public Animator Animator { get; private set; }
