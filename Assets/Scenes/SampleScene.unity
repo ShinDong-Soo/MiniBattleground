@@ -154,7 +154,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 50}
   m_SizeDelta: {x: 32, y: 32}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &80459697
@@ -2924,6 +2924,7 @@ MonoBehaviour:
     jumpParameterName: Jump
     fallParameterName: Fall
     baseAttackParameterName: BaseAttack
+    isAimingParameterName: IsAiming
   <Data>k__BackingField: {fileID: 11400000, guid: 741f741e63e318e449e98efc9895871c,
     type: 2}
 --- !u!4 &1296169920

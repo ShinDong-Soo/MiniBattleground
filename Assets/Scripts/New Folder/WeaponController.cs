@@ -41,8 +41,14 @@ public class WeaponController : MonoBehaviour
         currentWeaponObject.transform.localRotation = Quaternion.Euler(data.equipRotaionOffset);
 
         currentWeaponFire = currentWeaponObject.GetComponent<WeaponFire>();
-
         currentWeaponType = data.weaponType;
+
         UIManager.Instance?.SetCrosshairVisible(data.weaponType == WeaponType.Gun);
+
+        var player = GetComponent<Player>();
+        if (player != null)
+        {
+            player.Animator.SetBool(player.AnimationData.IsAimingParameterHash, data.weaponType == WeaponType.Gun);
+        }
     }
 }
