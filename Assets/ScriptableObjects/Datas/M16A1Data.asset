@@ -18,5 +18,5 @@ MonoBehaviour:
   range: 100
   weaponPrefab: {fileID: 3852799265655734254, guid: ad992249c2e11f048a1e6f57d4b807a0,
     type: 3}
-  equipPositionOffset: {x: 0, y: 0, z: 0}
-  equipRotaionOffset: {x: 180, y: -110, z: 95}
+  equipPositionOffset: {x: 0, y: 0.2, z: 0}
+  equipRotaionOffset: {x: 180, y: 0, z: 95}
