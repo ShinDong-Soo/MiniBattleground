@@ -4,51 +4,27 @@ using UnityEngine.Pool;
 public class WeaponFire : MonoBehaviour
 {
     [SerializeField] private Transform muzzlePoint;
-    [SerializeField] private Bullet bulletPrefab;
+    [SerializeField] private float fireRate = 0.2f;
 
-    private IObjectPool<Bullet> bulletPool;
+    private float lastFireTime;
 
-
-    private void Awake()
-    {
-        if (muzzlePoint != null)
-        {
-            muzzlePoint = transform.Find("MozzlePoint");
-        }
-
-        bulletPool = new ObjectPool<Bullet>(
-            CreateBullet, OnGetBullet, OnRealseBullet, OnDestroyBullet,
-            collectionCheck: false, defaultCapacity: 10, maxSize: 30);
-    }
 
 
     public void Fire()
     {
-        if (muzzlePoint == null || bulletPrefab == null) return;
+        if (Time.time < lastFireTime + fireRate) return;
 
-        Bullet bullet = bulletPool.Get();
+        if (muzzlePoint == null)
+        {
+            Debug.LogWarning("Muzzle point not assigned");
+            return;
+        }
+
+        Bullet bullet = BulletPool.Instance.GetBullet();
         bullet.transform.position = muzzlePoint.position;
         bullet.transform.rotation = muzzlePoint.rotation;
-        bullet.gameObject.SetActive(true);
+        bullet.Fire(muzzlePoint.forward);
+
+        lastFireTime = Time.time;
     }
-
-
-    private Bullet CreateBullet()   
-    {
-        var bullet = Instantiate(bulletPrefab);
-        bullet.SetPool(bulletPool);
-        return bullet;
-    }
-
-
-    private void OnGetBullet(Bullet bullet)
-    {
-        bullet.gameObject.SetActive(true);      
-        bullet.Reset();
-    }
-
-
-    private void OnRealseBullet(Bullet bullet) => bullet.gameObject.SetActive(false);
-
-    private void OnDestroyBullet(Bullet bullet) => Destroy(bullet.gameObject);
 }

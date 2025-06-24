@@ -4,18 +4,14 @@ using UnityEngine.Pool;
 [RequireComponent(typeof(Rigidbody))]
 public class Bullet : MonoBehaviour
 {
-    private float speed = 30f;
-    private float lifetime = 3f;
-    private float timer;
+    [SerializeField] private float speed = 30f;
+    [SerializeField] private float lifetime = 3f;
+    [SerializeField] private GameObject hitEffectPrefab;
 
-    private IObjectPool<Bullet> pool;
+    private float timer;
     private Rigidbody rb;
 
 
-    public void SetPool(IObjectPool<Bullet> objectPool)
-    {
-        pool = objectPool;
-    }
 
     private void Awake()
     {
@@ -23,12 +19,17 @@ public class Bullet : MonoBehaviour
     }
 
 
-    private void OnEnable()
+    public void Fire(Vector3 direction)
     {
+        gameObject.SetActive(true);
+        rb.linearVelocity = direction * speed;
         timer = 0f;
 
-        rb.linearVelocity = transform.position * speed;
-
+        TrailRenderer trail = GetComponent<TrailRenderer>();
+        if (trail != null)
+        {
+            trail.Clear();
+        }
     }
 
 
@@ -37,35 +38,25 @@ public class Bullet : MonoBehaviour
         timer += Time.deltaTime;
         if (timer > lifetime)
         {
-            ReturnToPool();
+            BulletPool.Instance.ReleaseBullet(this);
         }
     }
 
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        if (hitEffectPrefab != null)
         {
-            
+            Vector3 hitPoint = other.ClosestPoint(transform.position);
+            GameObject effect = Instantiate(hitEffectPrefab, hitPoint, Quaternion.identity);
+            Destroy(effect, 1.0f);
         }
 
-        ReturnToPool();
-    }
+        if (other.CompareTag("Enemy"))
+        {
+            Debug.Log("Enemy Hit");
+        }
 
-
-
-    private void ReturnToPool()
-    {
-        if (pool != null)
-            pool.Release(this);
-        else
-            Destroy(gameObject);
-    }
-
-
-
-    public void Reset()
-    {
-        timer = 0f;
+        BulletPool.Instance.ReleaseBullet(this);
     }
 }
